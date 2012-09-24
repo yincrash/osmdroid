@@ -1,7 +1,6 @@
 package org.osmdroid.tileprovider;
 
 import org.osmdroid.tileprovider.modules.MapTileModuleProviderBase;
-import org.osmdroid.views.overlay.TilesOverlay;
 
 /**
  * A map tile is distributed using the observer pattern. The tile is delivered by a tile provider

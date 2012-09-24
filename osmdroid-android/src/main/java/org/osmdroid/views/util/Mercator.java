@@ -1,9 +1,6 @@
 // Created by plusminus on 17:53:07 - 25.09.2008
 package org.osmdroid.views.util;
 
-import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.util.BoundingBoxE6;
-import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.util.constants.MapViewConstants;
 
 import android.graphics.Point;
@@ -70,21 +67,6 @@ public class Mercator implements MapViewConstants {
 	/**
 	 * Mercator projection of GeoPoint at given zoom level
 	 * 
-	 * @param pGeoPoint
-	 * @param zoom
-	 *            zoom level
-	 * @param pUseAsReturnValue
-	 * @return Point with x,y in the range [-2^(zoom-1) to 2^(zoom-1)]
-	 */
-	public static Point projectGeoPoint(final IGeoPoint pGeoPoint, final int pZoom,
-			final Point pUseAsReturnValue) {
-		return projectGeoPoint(pGeoPoint.getLatitudeE6() * 1E-6, pGeoPoint.getLongitudeE6() * 1E-6,
-				pZoom, pUseAsReturnValue);
-	}
-
-	/**
-	 * Mercator projection of GeoPoint at given zoom level
-	 * 
 	 * @param aLat
 	 *            latitude in degrees [-89 to 89]
 	 * @param aLon
@@ -106,44 +88,7 @@ public class Mercator implements MapViewConstants {
 
 		return p;
 	}
-
-	/**
-	 * Get bounding box from reverse Mercator projection.
-	 * 
-	 * @param left
-	 * @param top
-	 * @param right
-	 * @param bottom
-	 * @param zoom
-	 * @return
-	 */
-	public static BoundingBoxE6 getBoundingBoxFromCoords(final int left, final int top,
-			final int right, final int bottom, final int zoom) {
-		return new BoundingBoxE6(tile2lat(top, zoom), tile2lon(right, zoom),
-				tile2lat(bottom, zoom), tile2lon(left, zoom));
-	}
-
-	/**
-	 * Get bounding box from reverse Mercator projection.
-	 * 
-	 * @param aMapTile
-	 * @param aZoom
-	 * @return
-	 */
-	public static BoundingBoxE6 getBoundingBoxFromPointInMapTile(final Point aMapTile,
-			final int aZoom) {
-		return new BoundingBoxE6(tile2lat(aMapTile.y, aZoom), tile2lon(aMapTile.x + 1, aZoom),
-				tile2lat(aMapTile.y + 1, aZoom), tile2lon(aMapTile.x, aZoom));
-	}
-
-	/**
-	 * Reverse Mercator projection of Point at given zoom level
-	 * 
-	 */
-	public static GeoPoint projectPoint(final int x, final int y, final int aZoom) {
-		return new GeoPoint((int) (tile2lat(y, aZoom) * 1E6), (int) (tile2lon(x, aZoom) * 1E6));
-	}
-
+	
 	public static double tile2lon(final int x, final int aZoom) {
 		return (double) x / (1 << aZoom) * 360.0 - 180;
 	}

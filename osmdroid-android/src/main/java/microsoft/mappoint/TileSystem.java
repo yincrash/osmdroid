@@ -8,8 +8,6 @@ package microsoft.mappoint;
  *
  */
 
-import org.osmdroid.util.GeoPoint;
-
 import android.graphics.Point;
 
 /**
@@ -120,36 +118,6 @@ public final class TileSystem {
 		final int mapSize = MapSize(levelOfDetail);
 		out.x = (int) Clip(x * mapSize + 0.5, 0, mapSize - 1);
 		out.y = (int) Clip(y * mapSize + 0.5, 0, mapSize - 1);
-		return out;
-	}
-
-	/**
-	 * Converts a pixel from pixel XY coordinates at a specified level of detail into
-	 * latitude/longitude WGS-84 coordinates (in degrees).
-	 * 
-	 * @param pixelX
-	 *            X coordinate of the point, in pixels
-	 * @param pixelY
-	 *            Y coordinate of the point, in pixels
-	 * @param levelOfDetail
-	 *            Level of detail, from 1 (lowest detail) to 23 (highest detail)
-	 * @param reuse
-	 *            An optional GeoPoint to be recycled, or null to create a new one automatically
-	 * @return Output parameter receiving the latitude and longitude in degrees.
-	 */
-	public static GeoPoint PixelXYToLatLong(final int pixelX, final int pixelY,
-			final int levelOfDetail, final GeoPoint reuse) {
-		final GeoPoint out = (reuse == null ? new GeoPoint(0, 0) : reuse);
-
-		final double mapSize = MapSize(levelOfDetail);
-		final double x = (Clip(pixelX, 0, mapSize - 1) / mapSize) - 0.5;
-		final double y = 0.5 - (Clip(pixelY, 0, mapSize - 1) / mapSize);
-
-		final double latitude = 90 - 360 * Math.atan(Math.exp(-y * 2 * Math.PI)) / Math.PI;
-		final double longitude = 360 * x;
-
-		out.setLatitudeE6((int) (latitude * 1E6));
-		out.setLongitudeE6((int) (longitude * 1E6));
 		return out;
 	}
 
